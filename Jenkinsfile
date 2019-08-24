@@ -23,14 +23,33 @@ pipeline {
         emailext(subject: 'Aprobar', to: 'Geovanni', body: 'Por favor aprobar')
       }
     }
-    stage('Approve') {
+    //stage('Approve') {
+    //  steps {
+    //    input(message: 'Se aprueba?', submitter: 'Geovanni')
+    //  }
+    //}
+    stage('Deploy to development') {
+      when{
+        branch 'deployment'
+      }
       steps {
-        input(message: 'Se aprueba?', submitter: 'Geovanni')
+        echo 'HECHO EN DESARROLLO!!!!'
       }
     }
-    stage('Deploy') {
+    stage('Deploy to production') {
+      when{
+        branch 'production'
+      }
       steps {
-        echo 'HECHO!!!!'
+        echo 'HECHO EN PRODUCCIÓN!!!!'
+      }
+    }
+    stage('Deploy to master') {
+      when{
+        branch 'master'
+      }
+      steps {
+        echo 'HECHO EN MASTER!!!!'
       }
     }
   }
